@@ -5,6 +5,7 @@ import Registration from "./pages/registration";
 import LoginPage from "./pages/login";
 import ProfilePage from './pages/profile';
 import FeedsPage from "./pages/feeds";
+import ReadLaterPage from "./pages/readLater";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <ProtectedRoute path="/feeds" component={FeedsPage} />
         <ProtectedRoute path="/profile" component={ProfilePage} />
+        <ProtectedRoute path="/read-later" component={ReadLaterPage} />
         <Redirect exact from="/" to="/login" />
       </Switch>
     </BrowserRouter>

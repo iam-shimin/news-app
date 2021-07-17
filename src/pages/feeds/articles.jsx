@@ -10,6 +10,7 @@ function Articles({ data }) {
           <ArticleCard
             title={article.title}
             multimedia={article.multimedia}
+            defaultImg={article.thumbnail_standard}
             url={article.url}
           />
         </Grid>

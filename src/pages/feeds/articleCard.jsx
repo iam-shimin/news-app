@@ -19,15 +19,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ArticleCard({ title, multimedia, url }) {
+export default function ArticleCard({ title, multimedia, url, defaultImg }) {
   const classes = useStyles();
   const [isRl, setIsRl] = React.useState(false);
-  const imgWithMaxSize = multimedia.reduce((selected, item) => {
-    if (item.height > selected.height) {
-      return item;
-    }
-    return selected;
-  });
+  const imgWithMaxSize = Array.isArray()
+    ? multimedia.reduce((selected, item) => {
+        if (item.height > selected.height) {
+          return item;
+        }
+        return selected;
+      })
+    : { url: defaultImg };
 
   function handleBookmark() {
     const userId = localStorage.getItem("token");
@@ -41,10 +43,15 @@ export default function ArticleCard({ title, multimedia, url }) {
 
   React.useEffect(() => {
     const userId = localStorage.getItem("token");
-      newsApi.getReadLaterList(Number(userId)).then(res => {
-        const isAddedToRl = !!res.data.find(article => article.title === title);
+    newsApi
+      .getReadLaterList(Number(userId))
+      .then((res) => {
+        const isAddedToRl = !!res.data.find(
+          (article) => article.title === title
+        );
         setIsRl(isAddedToRl);
-      }).catch(console.error);
+      })
+      .catch(console.error);
   }, [title]);
 
   return (
@@ -64,10 +71,15 @@ export default function ArticleCard({ title, multimedia, url }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" href={url} target="_blank">
+        <Button size="small" color="primary" href={url} target="_blank" rel="noreferrer">
           Show
         </Button>
-        <Button disabled={isRl} onClick={handleBookmark} size="small" color="primary">
+        <Button
+          disabled={isRl}
+          onClick={handleBookmark}
+          size="small"
+          color="primary"
+        >
           Read Later
         </Button>
       </CardActions>
