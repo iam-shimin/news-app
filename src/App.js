@@ -1,5 +1,6 @@
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import "./App.css";
+import ProtectedRoute from "./components/protectedRoute";
 import Registration from "./pages/registration";
 import LoginPage from "./pages/login";
 import ProfilePage from './pages/profile';
@@ -11,8 +12,8 @@ function App() {
       <Switch>
         <Route path="/registration" component={Registration} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/feeds" component={FeedsPage} />
-        <Route path="/profile" component={ProfilePage} />
+        <ProtectedRoute path="/feeds" component={FeedsPage} />
+        <ProtectedRoute path="/profile" component={ProfilePage} />
         <Redirect exact from="/" to="/login" />
       </Switch>
     </BrowserRouter>
