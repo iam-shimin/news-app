@@ -4,6 +4,10 @@ function load(key) {
   return users;
 }
 
+if (process.env.REACT_APP_NYTIMES_APIKEY === 'PlaceApiKeyHere') {
+  throw new Error('ApiKeyNotFound');
+}
+
 async function getArticleList(page = 0, limit = 15) {
   return fetch(
     `https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=${process.env.REACT_APP_NYTIMES_APIKEY}&limit=${limit}&page=${page}`
