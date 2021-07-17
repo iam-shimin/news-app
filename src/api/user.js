@@ -21,7 +21,13 @@ async function login(credentials) {
     : (user) => user.display_name === credentials.display_name;
   const matchedUser = users.find(userGetter);
 
-  if (matchedUser && matchedUser.password === credentials.password) {
+  const isValid =
+    matchedUser &&
+    (credentials.password
+      ? matchedUser.password === credentials.password
+      : true);
+
+  if (isValid) {
     return {
       status: 200,
       success: true,
