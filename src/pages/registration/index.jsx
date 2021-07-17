@@ -84,7 +84,7 @@ function Registration({ classes, history }) {
       <Grid container alignItems="center">
         <h1>User Registration</h1>
         <form style={{ width: "100%" }} onSubmit={handleFormSubmit}>
-          <Grid className={classes.group} xs={12}>
+          <Grid item className={classes.group} xs={12}>
             <TextField
               name="email"
               type="email"
@@ -95,10 +95,10 @@ function Registration({ classes, history }) {
               className={classes.input}
               onChange={handleFieldChange}
               helperText={errors.email}
-              error={errors.email}
+              error={!!errors.email}
             />
           </Grid>
-          <Grid className={classes.group} xs={12}>
+          <Grid item className={classes.group} xs={12}>
             <TextField
               name="display_name"
               label="Display Name"
@@ -108,10 +108,10 @@ function Registration({ classes, history }) {
               className={classes.input}
               onChange={handleFieldChange}
               helperText={errors.display_name}
-              error={errors.display_name}
+              error={!!errors.display_name}
             />
           </Grid>
-          <Grid className={classes.group} xs={12}>
+          <Grid item className={classes.group} xs={12}>
             <TextField
               name="password"
               type="password"
@@ -122,10 +122,10 @@ function Registration({ classes, history }) {
               className={classes.input}
               onChange={handleFieldChange}
               helperText={errors.password}
-              error={errors.password}
+              error={!!errors.password}
             />
           </Grid>
-          <Grid className={classes.group} xs={12}>
+          <Grid item className={classes.group} xs={12}>
               {errors.appError && <FormHelperText error>{errors.appError}</FormHelperText>}
             <Button type="submit" variant="contained" color="primary">
               Register
