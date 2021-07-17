@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+**Before running any scripts The API key for NYTimes need to be added to `.env` file against `REACT_APP_NYTIMES_APIKEY`**
+
 In the project directory, you can run:
 
 ### `npm start`
