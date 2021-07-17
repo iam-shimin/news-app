@@ -6,6 +6,7 @@ import Label from "../../components/label";
 import Password from "./password";
 import DisplayNameField from "./displayName";
 import userApi from "../../api/user";
+import { validatePassword } from "../../helpers/validation";
 
 function ProfilePage() {
   const [profileData, setProfileData] = React.useState(null);
@@ -27,22 +28,28 @@ function ProfilePage() {
   }
 
   function handlePwdChange(payload) {
+    const validationError = validatePassword(payload.new_pwd);
+    if (validationError) {
+      setPasswordData({
+        isError: true,
+        text: validationError,
+      });
+      return;
+    }
     if (payload.current_pwd && payload.new_pwd) {
       userApi
         .resetPassword(profileData.id, payload)
         .then(() => {
-          setPasswordData((state) => ({
-            ...state,
+          setPasswordData({
             isError: false,
             text: "Password Updated!",
-          }));
+          });
         })
         .catch((error) => {
-          setPasswordData((state) => ({
-            ...state,
+          setPasswordData({
             isError: true,
             text: error.message || "Something Went Wrong!",
-          }));
+          });
         });
     }
   }

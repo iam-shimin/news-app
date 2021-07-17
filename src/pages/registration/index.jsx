@@ -1,7 +1,17 @@
 import React from "react";
-import { Grid, TextField, Button, withStyles, FormHelperText } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  Button,
+  withStyles,
+  FormHelperText,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import userApi from "../../api/user";
+import {
+  validateDisplayName,
+  validatePassword,
+} from "../../helpers/validation";
 
 const withCustomStyles = withStyles(() => ({
   group: {
@@ -22,7 +32,7 @@ function Registration({ classes, history }) {
     email: "",
     password: "",
     display_name: "",
-    appError: ''
+    appError: "",
   });
 
   function handleFieldChange(event) {
@@ -38,27 +48,23 @@ function Registration({ classes, history }) {
       display_name: "Display Name",
     };
     Object.entries(data).forEach(([key, value]) => {
-      const noSpecialChars = /^[a-zA-Z0-9]+$/;
       if (!value) {
         nextErrors[key] = `The field '${names[key]}' is required`;
         return;
       }
 
-      
       if (key === "password") {
-        if (value.length > 20) {
-          nextErrors["password"] = `${names[key]} should be max 20 characters`;
-        } else if (!noSpecialChars.test(value)) {
-          nextErrors[
-            "password"
-          ] = `${names[key]} should not contain special characters characters`;
+        const error = validatePassword(value);
+        if (error) {
+          nextErrors["password"] = error;
         }
       }
 
-      if (key === "display_name" && !noSpecialChars.test(value)) {
-        nextErrors[
-          "display_name"
-        ] = `${names[key]} should not contain special characters characters`;
+      if (key === "display_name") {
+        const error = validateDisplayName(value);
+        if (error) {
+          nextErrors["display_name"] = error;
+        }
       }
     });
 
@@ -69,15 +75,21 @@ function Registration({ classes, history }) {
     event.preventDefault();
     const currentErrors = handleValidation(formData);
     if (currentErrors) {
-      setErrors(state => ({...state, ...currentErrors}));
+      setErrors((state) => ({ ...state, ...currentErrors }));
       return;
     }
 
-    userApi.createUser(formData).then(() => {
-        history.push('/login');
-    }).catch(error => {
-        setErrors(state => ({...state, appError: error.message || 'Something Went Wrong!'}));
-    });
+    userApi
+      .createUser(formData)
+      .then(() => {
+        history.push("/login");
+      })
+      .catch((error) => {
+        setErrors((state) => ({
+          ...state,
+          appError: error.message || "Something Went Wrong!",
+        }));
+      });
   }
   return (
     <Grid container style={{ padding: "0 10%", minHeight: "100vh" }}>
@@ -126,7 +138,9 @@ function Registration({ classes, history }) {
             />
           </Grid>
           <Grid item className={classes.group} xs={12}>
-              {errors.appError && <FormHelperText error>{errors.appError}</FormHelperText>}
+            {errors.appError && (
+              <FormHelperText error>{errors.appError}</FormHelperText>
+            )}
             <Button type="submit" variant="contained" color="primary">
               Register
             </Button>
