@@ -1,11 +1,11 @@
-function getUsers() {
-  const usersAsJson = localStorage.getItem("users");
+function load(key) {
+  const usersAsJson = localStorage.getItem(key);
   const users = !!usersAsJson ? JSON.parse(usersAsJson) : [];
   return users;
 }
 
 async function createUser(user) {
-  const users = getUsers();
+  const users = load("users");
   user.id = Date.now();
   users.push(user);
   localStorage.setItem("users", JSON.stringify(users));
@@ -19,7 +19,7 @@ async function createUser(user) {
 }
 
 async function login(credentials) {
-  const users = getUsers();
+  const users = load("users");
   const userGetter = credentials.token
     ? (user) => Number(credentials.token) === user.id
     : (user) => user.display_name === credentials.display_name;
@@ -43,7 +43,7 @@ async function login(credentials) {
 }
 
 async function getUserById(userId) {
-  const users = getUsers();
+  const users = load("users");
   const matchedUser = users.find((user) => user.id === userId);
 
   if (matchedUser) {
@@ -59,7 +59,7 @@ async function getUserById(userId) {
 async function updateUserById(userId, patch) {
   if (!patch) throw new Error("Bad Request");
 
-  const users = getUsers();
+  const users = load("users");
   const updatedUsers = users.map((user) =>
     user.id === userId ? { ...user, ...patch } : user
   );
@@ -78,7 +78,7 @@ async function updateUserById(userId, patch) {
 }
 
 async function resetPassword(userId, payload) {
-  const users = getUsers();
+  const users = load("users");
   const matchedUser = users.find((user) => user.id === userId);
 
   if (!matchedUser) throw new Error("Bad Request");
@@ -98,6 +98,12 @@ async function resetPassword(userId, payload) {
   throw new Error("Password Incorrect!");
 }
 
-const userApi = { createUser, login, getUserById, updateUserById, resetPassword };
+const userApi = {
+  createUser,
+  login,
+  getUserById,
+  updateUserById,
+  resetPassword,
+};
 
 export default userApi;
