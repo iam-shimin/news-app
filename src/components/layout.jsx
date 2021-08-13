@@ -35,8 +35,7 @@ function Layout({children}) {
     return (
         <>
         <AppBar
-          position="static"
-          style={{ height: "6vh", position: "fixed", top: 0 }}
+          position="fixed"
         >
           <Toolbar>
             <Typography variant="h6">News</Typography>
@@ -52,7 +51,8 @@ function Layout({children}) {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Grid container style={{ minHeight: "94vh", marginTop: "6vh" }}>
+        <Toolbar />
+        <Grid container>
           {children}
         </Grid>
       </>

@@ -126,7 +126,7 @@ function ProfilePage() {
         <Grid item>
           <Label>Change Password</Label>
         </Grid>
-        <Grid item xs={5} style={{ marginTop: "1em" }}>
+        <Grid item xs style={{ marginTop: "1em" }}>
           <Password onChange={handlePwdChange} />
           {passwordData.text && (
             <FormHelperText error={passwordData.isError}>

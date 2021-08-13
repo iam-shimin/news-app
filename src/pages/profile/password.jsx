@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, IconButton } from "@material-ui/core";
+import { TextField, IconButton, Grid } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 
 function Password({ onChange }) {
@@ -21,26 +21,32 @@ function Password({ onChange }) {
     });
   }
   return (
-    <>
-      <TextField
-        label="Current Password"
-        type="password"
-        name="current_pwd"
-        value={localPwd.current_pwd}
-        onChange={handleChange}
-      />
-      <TextField
-        label="New Password"
-        type="password"
-        name="new_pwd"
-        style={{ marginLeft: "2em" }}
-        value={localPwd.new_pwd}
-        onChange={handleChange}
-      />
+    <Grid container>
+      <Grid xs>
+        <TextField
+          label="Current Password"
+          type="password"
+          name="current_pwd"
+          value={localPwd.current_pwd}
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid xs>
+        <TextField
+          label="New Password"
+          type="password"
+          name="new_pwd"
+          style={{ marginLeft: "2em" }}
+          value={localPwd.new_pwd}
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid xs={1}>
       <IconButton onClick={handleSave}>
         {localPwd.current_pwd && localPwd.new_pwd && <SaveIcon />}
       </IconButton>
-    </>
+      </Grid>
+    </Grid>
   );
 }
 

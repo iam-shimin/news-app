@@ -6,10 +6,7 @@ import userApi from "../../api/user";
 const withCustomStyles = withStyles(() => ({
   group: {
     marginTop: "1em",
-  },
-  input: {
-    width: "25%",
-  },
+  }
 }));
 
 function LoginPage({ classes, history }) {
@@ -85,7 +82,6 @@ function LoginPage({ classes, history }) {
               variant="outlined"
               placeholder="Your Display Name"
               value={formData.display_name}
-              className={classes.input}
               onChange={handleFieldChange}
               helperText={errors.display_name}
               error={!!errors.display_name}
@@ -99,7 +95,6 @@ function LoginPage({ classes, history }) {
               variant="outlined"
               placeholder="Password"
               value={formData.password}
-              className={classes.input}
               onChange={handleFieldChange}
               helperText={errors.password}
               error={!!errors.password}
